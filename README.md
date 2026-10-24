@@ -115,6 +115,15 @@ Mỗi skill là một file markdown trong `skills/<trục>/`, khai báo hai ph�
 
 Thêm một phong cách hoặc môn học mới chỉ là thêm một file. Riêng phong cách cần `template:` trỏ tới một template có sẵn trong `studio.html`.
 
+## Hai chỗ điền
+
+Trong `app/` còn hai mã định danh gắn với tài khoản riêng, đã thay bằng chỗ điền khi đưa lên repo công khai:
+
+- `ARTIFACT_ID` trong `app/CLAUDE.md`, `app/HANDOFF.md`, `app/tts/trigger_prompt2.txt` — mã bản Artifact gốc trên claude.ai.
+- `trig_SCHEDULED_TASK_ID` trong `app/HANDOFF.md` và `app/web/studio.html` — mã tác vụ giọng đọc trên đám mây.
+
+Bản chạy local **không cần hai mã này**: giọng đọc chạy thẳng trên máy qua `app/tts/xv_daemon.py`, và `local-shim.js` bỏ qua `trigger_id`. Chúng chỉ có nghĩa nếu bạn muốn quay lại dùng bản Artifact cùng tác vụ giọng đọc trên đám mây.
+
 ## Thư mục
 - `app\`: mã gốc từ file zip (web, tts, sfx, test)
 - `skills\`: bốn trục, mỗi skill một file

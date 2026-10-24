@@ -3,9 +3,9 @@
 Đọc `CLAUDE.md` trước để nắm kiến trúc. File này chỉ ghi những gì cần biết để tiếp tục công việc.
 
 ## Trạng thái hiện tại
-- Artifact "Xưởng Video Bài Giảng" đã publish bản 9 tại https://claude.ai/artifact/Vs3F3rR2neMkC4hwoCiMFm. `web/studio.html` là đúng bản đó.
+- Artifact "Xưởng Video Bài Giảng" đã publish bản 9 tại https://claude.ai/artifact/ARTIFACT_ID. `web/studio.html` là đúng bản đó.
 - Bản 9 vừa gỡ giới hạn nội dung cho Claude (tối đa 60 cảnh, chữ dài hơn, hình tối đa 300 phần tử, thêm nét curve/arc/ellipse, model mặc định "Mạnh nhất"). Đã test hiển thị ở cả 4 template, chưa test phần gọi Claude trong trang.
-- Scheduled task giọng đọc: `trig_01Jjkbod4tCUjY1AiLnMEdde`, chạy Sonnet.
+- Scheduled task giọng đọc: `trig_SCHEDULED_TASK_ID`, chạy Sonnet.
 
 ## Ba điều cần biết
 1. Artifact: vẫn nằm ở đường dẫn cũ. Claude Code chỉ sửa và xuất bản lại được nếu phiên đó có công cụ Artifact (publish cùng URL để giữ link). Nếu không, dán lại `web/studio.html` vào artifact.

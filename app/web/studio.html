@@ -1101,7 +1101,7 @@ function requestTTS(job){
 }
 /* Automatic voice: the page starts the "Xưởng video: tạo giọng đọc" scheduled task, which runs VieNeu in the cloud
    and writes the audio back into this page's store. Waits until no script is still being written so one run covers the batch. */
-const TTS_TRIGGER='trig_01Jjkbod4tCUjY1AiLnMEdde';
+const TTS_TRIGGER='trig_SCHEDULED_TASK_ID';
 let voiceTimer=null,voiceWaitStart=0;
 function scheduleVoiceRun(){
   if(!S.mcp||S.autoVoice===false)return;

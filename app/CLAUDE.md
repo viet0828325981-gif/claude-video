@@ -5,11 +5,11 @@ Xem thêm `HANDOFF.md` (trạng thái, việc chưa làm).
 Hệ thống tự động tạo video bài giảng 2D ngắn (khổ dọc 9:16, chữ + hình vẽ) từ một yêu cầu ngắn. Claude viết kịch bản, vẽ hình minh hoạ, trang dựng ra MP4 thật. Người dùng nói tiếng Việt, thích câu trả lời trực tiếp, tối giản, không over-engineering.
 
 ## Kiến trúc (6 lớp)
-1. Giao diện: `web/studio.html` (một file duy nhất, ~500KB, đã publish làm Artifact: https://claude.ai/artifact/Vs3F3rR2neMkC4hwoCiMFm). Nhập yêu cầu, chọn template/model/giọng/SFX, lưới job, cửa sổ sửa cảnh.
+1. Giao diện: `web/studio.html` (một file duy nhất, ~500KB, đã publish làm Artifact: https://claude.ai/artifact/ARTIFACT_ID). Nhập yêu cầu, chọn template/model/giọng/SFX, lưới job, cửa sổ sửa cảnh.
 2. Bộ não Claude: capability `sample` của Artifact. `S.sample.json(prompt,{cache:false,modelTier})`. Lời nhắc: `scriptPrompt`, `sceneFixPrompt`, `visualPrompt`, `VIS_SPEC`. Kết quả qua `normScript`/`normScene`/`normVisual` (nơi đặt các giới hạn).
 3. Bộ dựng trong trình duyệt: Canvas2D 720x1280 @30fps (`renderFrame`), Three.js r128 cho template geo3d, WebCodecs + mp4-muxer -> MP4, trộn lời đọc + SFX + nhạc (`mixTrack`). Tối đa 5 video song song (`MAX_PARALLEL`).
 4. Lưu trữ: capability `db` (collection `jobs`, mỗi video một doc), `assets` (MP4, WebM/Opus giọng đọc), localStorage cho tuỳ chọn riêng. Đồng bộ qua onSnapshot.
-5. Giọng đọc: trang đặt `tts.status='requested'` -> `S.mcp.callTool('Claude Code Remote','fire_trigger',...)` -> scheduled task `trig_01Jjkbod4tCUjY1AiLnMEdde` (prompt trong `tts/trigger_prompt2.txt`, chạy `tts/xv_worker.py` với VieNeu-TTS int8) -> tải audio lên assets, ghi `tts.status='ready'` -> trang tự dựng lại có tiếng. ~2 phút.
+5. Giọng đọc: trang đặt `tts.status='requested'` -> `S.mcp.callTool('Claude Code Remote','fire_trigger',...)` -> scheduled task `trig_SCHEDULED_TASK_ID` (prompt trong `tts/trigger_prompt2.txt`, chạy `tts/xv_worker.py` với VieNeu-TTS int8) -> tải audio lên assets, ghi `tts.status='ready'` -> trang tự dựng lại có tiếng. ~2 phút.
 6. Thủ công: nút "Gửi Claude dựng bản HQ" chỉ đặt `job.hq.status='requested'`; dựng bằng Remotion/Manim chưa tự động.
 
 ## Nguyên tắc nội dung
