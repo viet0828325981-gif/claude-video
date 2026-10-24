@@ -1,0 +1,6 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    { "name": "xuong-video", "runtimeExecutable": "node", "runtimeArgs": ["server.mjs"], "port": 8790 }
+  ]
+}

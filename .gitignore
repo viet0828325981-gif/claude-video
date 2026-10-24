@@ -1,0 +1,14 @@
+# Phụ thuộc cài tại chỗ, dựng lại bằng cai-dat.bat
+node_modules/
+.venv/
+
+# Cache tải về: npm, pip, mô hình giọng Hugging Face
+.cache/
+
+# Dữ liệu riêng: job, kịch bản, video, giọng đọc, phiên agent
+data/
+
+# Lặt vặt
+Thumbs.db
+.DS_Store
+*.log
