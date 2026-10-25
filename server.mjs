@@ -33,15 +33,14 @@ function pageHtml() {
   let h = fs.readFileSync(path.join(ROOT, 'app/web/studio.html'), 'utf8');
   h = h.replace(/<link rel="preconnect"[^>]*>\s*/g, '')
     .replace(/<link href="https:\/\/fonts\.googleapis\.com[^>]*>/, FONT_CSS)
-    .replace('https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js', '/vendor/three.min.js')
     .replace('https://cdn.jsdelivr.net/npm/mp4-muxer@5.1.3/build/mp4-muxer.js', '/vendor/mp4-muxer.js')
-    .replace('<script src="/vendor/three.min.js">', '<script src="/local-shim.js"></script>\n<script src="/vendor/three.min.js">');
+    // local-shim.js phải nạp trước mã của trang, nên neo vào thẻ vendor đầu tiên.
+    .replace('<script src="/vendor/mp4-muxer.js">', '<script src="/local-shim.js"></script>\n<script src="/vendor/mp4-muxer.js">');
   return h + '\n<script src="/local-ui.js"></script>\n'; // studio.html không có thẻ </body>, nối vào cuối
 }
 const STATIC = {
   '/local-shim.js': [path.join(ROOT, 'local-shim.js'), 'text/javascript; charset=utf-8'],
   '/local-ui.js': [path.join(ROOT, 'local-ui.js'), 'text/javascript; charset=utf-8'],
-  '/vendor/three.min.js': [path.join(ROOT, 'app/test/vendor/three.min.js'), 'text/javascript; charset=utf-8'],
   '/vendor/mp4-muxer.js': [path.join(ROOT, 'app/test/vendor/mp4-muxer.js'), 'text/javascript; charset=utf-8'],
 };
 
