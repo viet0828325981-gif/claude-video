@@ -18,7 +18,7 @@ Kiểu thứ nhất là kiểu riêng của dạng này, nên phần dưới nó
 
 ### Dựng đường tròn đơn vị
 
-Khung vuông: `view: [200, 200]` với `box` khoảng `[0.08, 0.26, 0.84, 0.47]` — hai cái cùng tỉ lệ, và giữ cố định suốt video.
+Khung vuông: `view: [200, 200]`, giữ cố định suốt video. Đường tròn là hình vuông nên `view` phải vuông, nếu không sẽ thừa dải trống trong ô.
 
 - Tâm `O` tại `[100, 100]`, bán kính 80.
 - `circle` tại `[100, 100]`, `r: 80`, `fill: "none"`, màu `ink`.
@@ -66,6 +66,14 @@ Lời đọc thì đọc thành chữ: "pi chia sáu", "ba mươi độ", "hai k
 1. Cung vẽ ngược chiều, góc hiện sai phần tư.
 2. Giải phương trình hoàn toàn bằng chữ, không có đường tròn nào để nhìn nghiệm.
 3. Lẫn độ với radian giữa các cảnh.
+
+## Tiêu chí nhìn
+
+Những câu chỉ trả lời được khi mở ảnh khung hình ra nhìn.
+
+- Cung của góc có nằm đúng góc phần tư không
+- Điểm nghiệm có nằm đúng trên đường tròn không
+- Đường tròn có tròn không, hay bị bẹt vì `view` sai tỉ lệ
 
 ## Tiêu chí kiểm
 

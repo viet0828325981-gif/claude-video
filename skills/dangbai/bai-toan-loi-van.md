@@ -12,7 +12,7 @@ Vì vậy sợi chỉ xuyên suốt là **bảng đại lượng mọc dần**, 
 
 ### Bố cục một hình cho cả video
 
-Chọn `view` cao, ví dụ `[180, 235]` với `box` khoảng `[0.06, 0.22, 0.88, 0.64]`, cùng tỉ lệ với nhau, và giữ cố định suốt video. Chia khung theo chiều cao:
+Chọn `view` cao, ví dụ `[180, 235]`, giữ cố định suốt video. Ô đặt hình do bộ dựng lo; bạn chia bên trong `view` theo chiều cao:
 
 - `y` 10 đến 110 — bảng đại lượng
 - `y` khoảng 135 — phương trình lập được
@@ -60,6 +60,13 @@ Giải ra nghiệm chưa xong. Phải có một cảnh **đối chiếu từng n
 1. Đi thẳng từ lời đề sang phương trình, không ai thấy phương trình ở đâu ra.
 2. Bảng điền hết một lúc ở một cảnh, mất hẳn tác dụng dẫn dắt.
 3. Giải ra nghiệm rồi kết luận luôn, không đối chiếu điều kiện thực tế.
+
+## Tiêu chí nhìn
+
+Những câu chỉ trả lời được khi mở ảnh khung hình ra nhìn.
+
+- Bảng đại lượng có đọc được không, các cột có thẳng hàng không
+- Ô đã điền và ô còn trống có phân biệt được không
 
 ## Tiêu chí kiểm
 

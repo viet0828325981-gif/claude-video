@@ -10,6 +10,7 @@ import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { runClaude, extractJson, MODELS } from './lib/claude.mjs';
 import { chayPipeline, docDetail, xoaDetail } from './lib/pipeline.mjs';
+import { suaCanh } from './lib/canh.mjs';
 import { loadSkills, TRUC, TRUC_VI } from './lib/skills.mjs';
 
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
@@ -229,6 +230,22 @@ const server = http.createServer(async (req, res) => {
           });
           log('[pipeline] xong', (detail.ms / 1000).toFixed(0) + 's ·', `${detail.con_chan} chặn, ${detail.con_sua} sửa, ${detail.con_ghi} ghi nhận`);
           return send(res, 200, { data: script, template });
+        } finally { if (b.jobId) steps.delete(b.jobId); }
+      }
+      // Sửa cảnh và vẽ hình cũng đi qua skill, hợp đồng chung và lớp kiểm, không gọi thẳng Claude nữa.
+      if ((b.kind === 'canh' || b.kind === 'hinh') && b.script) {
+        const k = Number(b.canh) || 0;
+        log('[canh]', b.kind === 'hinh' ? 'vẽ hình' : 'sửa cảnh', model, '· cảnh', k + 1, '·', String(b.instr || '').slice(0, 50));
+        try {
+          const r = await suaCanh({
+            script: b.script, k, instr: String(b.instr || ''), axes: b.truc || {},
+            duration: Number(b.duration) || 60, model, chiHinh: b.kind === 'hinh',
+            onStep: s => { if (b.jobId) steps.set(b.jobId, s); log('[canh]', s); }
+          });
+          const nang = r.loi.filter(x => x.muc === 'chan' || (x.muc === 'sua' && x.tang === 'may'));
+          log('[canh] xong ·', r.vongSua ? 'có sửa lại ·' : '', nang.length ? nang.length + ' lỗi còn lại' : 'không lỗi mới');
+          const data = b.kind === 'hinh' ? { visual: r.canh[0].visual } : (r.canh.length > 1 ? r.canh : r.canh[0]);
+          return send(res, 200, { data, loi: r.loi });
         } finally { if (b.jobId) steps.delete(b.jobId); }
       }
       const t0 = Date.now(); log('[claude]', model, '…');

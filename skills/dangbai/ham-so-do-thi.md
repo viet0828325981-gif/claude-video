@@ -31,7 +31,7 @@ Ví dụ `x ∈ [-4, 4]`, `y ∈ [-2, 10]`: miền rộng 8 cao 12, nên `view: 
 
 ### Bảng giá trị để ở đâu
 
-Dùng `items` của một cảnh `type: "list"`, **đừng vẽ `table` chung `box` với hệ trục**. Chen bảng vào cùng khung thì hoặc chật, hoặc phải đổi `box` — mà đổi `box` là mất khớp và cả hình vẽ lại.
+Dùng `items` của một cảnh `type: "list"`, **đừng vẽ `table` chung ô hình với hệ trục**. Chen bảng vào cùng ô thì cả hai đều chật, và hệ trục mất khớp với cảnh trước.
 
 ### Biện luận theo tham số
 
@@ -51,6 +51,15 @@ Mỗi trường hợp là một `curve` **mới thêm vào cuối** cùng một 
 2. `view` không khớp tỉ lệ miền, đồ thị dẹt như đường thẳng hoặc tràn ra ngoài.
 3. `curve` quá ít điểm, đường cong thành đường gấp khúc.
 
+## Tiêu chí nhìn
+
+Những câu chỉ trả lời được khi mở ảnh khung hình ra nhìn.
+
+- Đồ thị có đúng dáng của hàm không: parabol quay đúng chiều, đường thẳng đúng độ dốc, tiệm cận đúng phía
+- Trục có đủ nhãn, mũi tên và gốc O không
+- Giao điểm có chấm và toạ độ ghi kèm không
+- Đường cong có mượt không hay đã thành đường gấp khúc
+
 ## Tiêu chí kiểm
 
 - [chan] Đồ thị vẽ sai dạng so với hàm số
@@ -60,4 +69,4 @@ Mỗi trường hợp là một `curve` **mới thêm vào cuối** cùng một 
 - [ghi] `curve` có dưới tám điểm nên đường cong thành đường gấp khúc
 - [ghi] Mỗi trường hợp biện luận vẽ một hệ trục riêng thay vì chồng lên một hệ trục
 - [ghi] Giao điểm hoặc điểm đặc biệt không ghi kèm toạ độ
-- [ghi] Vẽ `table` chung `box` với hệ trục nên hình chật hoặc phải đổi `box`
+- [ghi] Vẽ `table` chung ô hình với hệ trục nên cả hai đều chật

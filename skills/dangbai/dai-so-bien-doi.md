@@ -8,11 +8,11 @@ mo_ta: Giải phương trình, hệ, bất phương trình, rút gọn biểu th
 
 Sợi chỉ xuyên suốt của dạng này là **cột biến đổi**: một cột các dòng biểu thức mọc dần từ trên xuống, dòng cũ không bao giờ biến mất. Người xem phải thấy được cả đường đi từ đề tới đáp số trong một khung hình, và biết mỗi lần đổi là nhờ phép gì.
 
-Đừng nghĩ đại số thì không có hình. Cột biến đổi **là** một hình, và nó dùng được nguyên vẹn cơ chế hình liên tục ở hợp đồng chung: cùng `view`, cùng `box`, dòng cũ đứng đầu mảng `els` giống hệt nhau, dòng mới thêm vào cuối. Làm đúng thì cả video là một cột lớn dần, không cảnh nào vẽ lại.
+Đừng nghĩ đại số thì không có hình. Cột biến đổi **là** một hình, và nó dùng được nguyên vẹn cơ chế hình liên tục ở hợp đồng chung: cùng `view`, dòng cũ đứng đầu mảng `els` giống hệt nhau, dòng mới thêm vào cuối. Làm đúng thì cả video là một cột lớn dần, không cảnh nào vẽ lại.
 
 ### Dựng cột biến đổi
 
-- `view` khoảng `[180, 210]` với `box` khoảng `[0.06, 0.26, 0.88, 0.58]`. Giữ cố định suốt video.
+- `view` khoảng `[180, 210]`, giữ cố định suốt video. Ô đặt hình do bộ dựng lo.
 - Mỗi dòng là một `text` tại `[8, y]`, `align: "l"`, `y` bắt đầu từ 20 và **cách nhau 24 đơn vị**. Tám dòng là vừa khung; cần hơn tám bước thì tách bài nhỏ hơn chứ đừng bóp khoảng cách dòng.
 - Tên phép vừa dùng ghi bên phải **cùng dòng đó**: `text` tại `[172, y]`, `align: "r"`, `size: 1`, màu `muted`. Ví dụ "chuyển vế", "nhân hai vế với x", "đặt nhân tử chung".
 - Muốn chỉ rõ chỗ vừa đổi thì **khoanh viền**, đừng tô kín: `rect` với `fill: "none"` và `c: "a2"`, hoặc gạch dưới bằng `line` màu nhấn. Phần tử tô kín vẽ sau sẽ **đè lên chữ** và che mất dòng.
@@ -43,6 +43,15 @@ Giữ nguyên cách viết biểu thức qua các bước để mắt bám theo 
 1. Mỗi cảnh viết lại biểu thức ở một chỗ khác trong khung, nên không ai thấy được đường đi.
 2. Một dòng nhảy hai phép cùng lúc, học sinh không biết vừa làm gì.
 3. Nhấn bằng phần tử tô kín, chữ bị che mất.
+
+## Tiêu chí nhìn
+
+Những câu chỉ trả lời được khi mở ảnh khung hình ra nhìn.
+
+- Cột biến đổi có đọc được từ trên xuống không
+- Tên phép ghi bên phải có dính vào biểu thức không
+- Chỗ vừa đổi có được khoanh hoặc gạch dưới không
+- Phần khoanh có che mất chữ không
 
 ## Tiêu chí kiểm
 

@@ -30,13 +30,9 @@ Phần nhấn là phần tử **thêm vào cuối**, không phải sửa phần 
 - `a2` — đối tượng đang chứng minh, hoặc hình thứ nhất khi so sánh
 - `a3` — hình thứ hai khi so sánh, hoặc kết quả vừa suy ra
 
-### Hình là nhân vật chính, đừng để khung trống
+### Hình là nhân vật chính
 
-Ở dạng này hình chiếm phần lớn khung, không phải nằm nép ở đáy. Sau tiêu đề là tới hình ngay — **đừng chừa dải trống giữa chữ và hình**, nhìn rất rời rạc.
-
-Chữ của cảnh vẫn vẽ ở chỗ cố định theo `type`, nên `box` phải **tránh hẳn vùng chữ**, không được chồng lên. Cảnh có `body` dài thì chừa phần dưới cho chữ; cảnh chỉ có `heading` ngắn thì cho `box` chạy gần hết khung. Dựng ảnh thử xong hãy nhìn kỹ xem nhãn trong hình có lọt vào giữa dòng chữ không.
-
-Hình nên đặt `box` lớn và **cố định suốt video**, vì nó phải sống cùng mọi cảnh. Chừa đủ chỗ cho chữ ở phần còn lại của khung.
+Bộ dựng đã dành sẵn một ô lớn cho hình ở mọi cảnh, nên bạn không phải tính chỗ đặt. Việc của bạn là chọn `view` đúng tỉ lệ hình thật: `view` vuông cho hình tròn và tam giác cân, `view` ngang cho hình bẹt. Chọn sai tỉ lệ thì hình không méo nhưng sẽ thừa một dải trống trong ô.
 
 ### Về lập luận
 
@@ -45,14 +41,21 @@ Vẽ hình theo giả thiết trước, rồi mỗi bước nói rõ **đang dù
 ### Ba chỗ hỏng đặc trưng
 
 1. Hình đủ nét nhưng không tô gì, nên nói về tam giác nào người xem cũng không tìm ra tam giác đó.
-2. Hình nhỏ nép ở đáy khung trong khi hai phần ba khung trên để trống.
+2. `view` chọn sai tỉ lệ nên hình nằm lọt thỏm giữa ô, thừa dải trống hai bên.
 3. Một cảnh vẽ thêm bốn năm đoạn cùng lúc, lời đọc chỉ kịp nhắc một đoạn.
+
+## Tiêu chí nhìn
+
+Những câu chỉ trả lời được khi mở ảnh khung hình ra nhìn.
+
+- Lời đọc nhắc đoạn, góc hay tam giác nào thì đối tượng đó có đang được tô hoặc nhấn màu không
+- Hai hình đang so sánh có đang khác màu nhau không
+- Hình có khớp giả thiết không: điểm có nằm đúng trên đường, góc vuông có đúng đỉnh, tiếp tuyến có chạm đúng một điểm
+- Nhãn đỉnh có nằm ngoài hình và đọc được không
 
 ## Tiêu chí kiểm
 
 - [chan] Hình vẽ mâu thuẫn với giả thiết của đề
 - [ghi] Cảnh so sánh hai hình mà không tô hai hình đó bằng hai màu khác nhau
 - [ghi] Lời đọc nhắc tới một đoạn, một góc hay một tam giác mà hình không làm nổi nó lên
-- [ghi] Khung còn dải trống lớn giữa chữ và hình
-- [ghi] Hình chỉ chiếm một phần nhỏ khung dù cảnh không có nhiều chữ
 - [ghi] Có bước suy luận không nói rõ dùng giả thiết nào

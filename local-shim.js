@@ -22,6 +22,21 @@ function jobDangViet(prompt){
     return c.sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0))[0]||null;
   }catch(e){return null;}
 }
+// Sửa cảnh và vẽ hình: trang chỉ gửi một cảnh, nhưng server cần cả kịch bản để giữ liên tục
+// hình và canh thời lượng. Lấy ngữ cảnh từ trình sửa cảnh đang mở.
+const LA_SUA_CANH=/^Đây là một cảnh trong video bài giảng tiếng Việt có tiêu đề/;
+const LA_VE_HINH=/^Đây là một cảnh trong video bài giảng tiếng Việt khổ dọc có tiêu đề/;
+function boiCanhCanh(prompt){
+  try{
+    const ED=window.__studio&&window.__studio.ED;
+    if(!ED||!ED.draft||!ED.job||!Array.isArray(ED.draft.scenes))return null;
+    // Yêu cầu của giáo viên nằm giữa cặp ba nháy trong lời nhắc trang dựng sẵn.
+    const i=prompt.indexOf(String.fromCharCode(34).repeat(3));
+    const j=i<0?-1:prompt.indexOf(String.fromCharCode(34).repeat(3),i+3);
+    return {script:ED.draft,canh:ED.sel,jobId:ED.job.id,duration:ED.job.duration,
+      instr:(j>i&&i>=0)?prompt.slice(i+3,j).trim():"",truc:(window.__xvTruc&&window.__xvTruc(ED.job.id))||{}};
+  }catch(e){return null;}
+}
 const sample={
   async json(prompt,opts){
     const body={prompt,modelTier:opts&&opts.modelTier};
@@ -31,7 +46,19 @@ const sample={
         body.truc=(window.__xvTruc&&window.__xvTruc(j.id))||{};
         body.che=(window.__xvChe&&window.__xvChe())||'nhanh';}
     }
+    else if(LA_SUA_CANH.test(prompt)||LA_VE_HINH.test(prompt)){
+      const c=boiCanhCanh(prompt);
+      if(c){body.kind=LA_VE_HINH.test(prompt)?'hinh':'canh';
+        body.script=c.script;body.canh=c.canh;body.jobId=c.jobId;
+        body.duration=c.duration;body.instr=c.instr;body.truc=c.truc;}
+    }
     const r=await api('POST','/api/sample',jsonBody(body),JH);
+    // Lớp kiểm có thể vẫn còn lỗi nặng sau vòng sửa; đừng im lặng giao cảnh hỏng cho giáo viên.
+    if(r.loi&&r.loi.length){
+      const nang=r.loi.filter(l=>l.muc==='chan'||(l.muc==='sua'&&l.tang==='may'));
+      const t=window.__studio&&window.__studio.toast;
+      if(nang.length&&t)t('Đã sửa nhưng còn '+nang.length+' lỗi: '+nang.map(l=>(l.canh?'cảnh '+l.canh+' ':'')+l.tieu_chi).join('; '));
+    }
     // Phong cách là một trong bốn trục, nên pipeline quyết template, ghi vào job trước khi trang lưu.
     if(r.template&&body.jobId){const j=window.__studio.S.jobs.get(body.jobId);if(j)j.template=r.template;}
     return r.data;

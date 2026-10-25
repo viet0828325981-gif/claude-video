@@ -6,7 +6,7 @@ import { chayPipeline } from './lib/pipeline.mjs';
 
 const DE = 'Cho tam giác ABC vuông tại A, đường cao AH. Biết AB = 6cm, AC = 8cm. Tính BC, AH, HB và HC.';
 const GIAY = 60;
-const TRUC = { theloai: 'giai-bai-tap', trinhdo: 'trung-binh', monhoc: 'toan', phongcach: 'chalk', lop: '9' };
+const TRUC = { theloai: 'giai-bai-tap', trinhdo: 'trung-binh', monhoc: 'toan', phongcach: 'minimal', lop: '9' };
 const TIER = 'complex'; // Opus cho mọi nhánh, để loại biến nhiễu model
 const RA = path.join('data', 'thi-nghiem');
 

@@ -34,7 +34,7 @@ const main = async () => {
     const n = nhanh[i], so = i + 1;
     const id = 'tn' + crypto.randomBytes(6).toString('hex');
     const job = {
-      id, prompt: kq.de, title: `Nhánh ${so}`, template: 'chalk', duration: kq.giay,
+      id, prompt: kq.de, title: `Nhánh ${so}`, template: 'minimal', duration: kq.giay,
       status: 'ready', script: n.script, assetId: '', error: '',
       createdAt: now + so, updatedAt: now + so, hq: null, voice: VOICE, tts: null, sfx: true
     };

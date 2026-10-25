@@ -8,7 +8,7 @@ mo_ta: Khối đa diện, hình chiếu, thể tích, khoảng cách và góc tr
 
 Sợi chỉ xuyên suốt là **một khối duy nhất, vẽ bằng hình chiếu song song, lớn dần theo lời** — y như giáo viên vẽ hình chóp lên bảng rồi kẻ thêm từng đường.
 
-**Khối 3D của phong cách `geo3d` chỉ là nền minh hoạ, không phải hình của bài.** Mọi đỉnh, cạnh, nhãn, số liệu và đường dựng đều phải nằm ở kênh `visual` hai chiều. Đừng trông vào khối nền để chở nội dung.
+**Bộ dựng không có khối ba chiều nào.** Hình không gian vẫn vẽ bằng hình chiếu hai chiều ở kênh `visual`, đúng như giáo viên vẽ hình chóp lên bảng. Mọi đỉnh, cạnh, nhãn và đường dựng đều nằm ở đó.
 
 ### Vẽ khối bằng hình chiếu song song
 
@@ -53,6 +53,15 @@ Góc vuông thật trong không gian **thường không vuông trên hình chi�
 2. Đỉnh xê dịch giữa các cảnh vì tính lại toạ độ mỗi lần.
 3. Trông vào khối 3D nền để chở nội dung, nên `visual` trống rỗng.
 
+## Tiêu chí nhìn
+
+Những câu chỉ trả lời được khi mở ảnh khung hình ra nhìn.
+
+- Cạnh khuất có đang là nét đứt không
+- Nhìn ra được đây là khối gì không, hay chỉ là một mớ đường
+- Mặt phẳng đang xét có được tô để tách khỏi các cạnh không
+- Nhãn đỉnh có dính vào cạnh không
+
 ## Tiêu chí kiểm
 
 - [chan] Hình chiếu mâu thuẫn với giả thiết của đề
@@ -61,4 +70,3 @@ Góc vuông thật trong không gian **thường không vuông trên hình chi�
 - [ghi] Nhãn đỉnh đặt đúng lên điểm hoặc lên cạnh nên không đọc được
 - [ghi] Mặt phẳng đang xét không tô màu nên lẫn vào các cạnh của khối
 - [ghi] Đánh dấu góc vuông theo hình chiếu thay vì theo giả thiết
-- [ghi] Số liệu và nhãn trông vào khối 3D nền thay vì vẽ ở kênh `visual`

@@ -7,7 +7,7 @@ Hệ thống tự động tạo video bài giảng 2D ngắn (khổ dọc 9:16, 
 ## Kiến trúc (6 lớp)
 1. Giao diện: `web/studio.html` (một file duy nhất, ~500KB, đã publish làm Artifact: https://claude.ai/artifact/ARTIFACT_ID). Nhập yêu cầu, chọn template/model/giọng/SFX, lưới job, cửa sổ sửa cảnh.
 2. Bộ não Claude: capability `sample` của Artifact. `S.sample.json(prompt,{cache:false,modelTier})`. Lời nhắc: `scriptPrompt`, `sceneFixPrompt`, `visualPrompt`, `VIS_SPEC`. Kết quả qua `normScript`/`normScene`/`normVisual` (nơi đặt các giới hạn).
-3. Bộ dựng trong trình duyệt: Canvas2D 720x1280 @30fps (`renderFrame`), Three.js r128 cho template geo3d, WebCodecs + mp4-muxer -> MP4, trộn lời đọc + SFX + nhạc (`mixTrack`). Tối đa 5 video song song (`MAX_PARALLEL`).
+3. Bộ dựng trong trình duyệt: Canvas2D 720x1280 @30fps (`renderFrame`), WebCodecs + mp4-muxer -> MP4, trộn lời đọc + SFX + nhạc (`mixTrack`). Tối đa 5 video song song (`MAX_PARALLEL`).
 4. Lưu trữ: capability `db` (collection `jobs`, mỗi video một doc), `assets` (MP4, WebM/Opus giọng đọc), localStorage cho tuỳ chọn riêng. Đồng bộ qua onSnapshot.
 5. Giọng đọc: trang đặt `tts.status='requested'` -> `S.mcp.callTool('Claude Code Remote','fire_trigger',...)` -> scheduled task `trig_SCHEDULED_TASK_ID` (prompt trong `tts/trigger_prompt2.txt`, chạy `tts/xv_worker.py` với VieNeu-TTS int8) -> tải audio lên assets, ghi `tts.status='ready'` -> trang tự dựng lại có tiếng. ~2 phút.
 6. Thủ công: nút "Gửi Claude dựng bản HQ" chỉ đặt `job.hq.status='requested'`; dựng bằng Remotion/Manim chưa tự động.
@@ -19,7 +19,7 @@ Hệ thống tự động tạo video bài giảng 2D ngắn (khổ dọc 9:16, 
 - Thời lượng cảnh bị lời đọc chi phối: `dur = max(dur, 0.35 + audio + 0.45)`.
 
 ## Template
-`TEMPLATES`: minimal (mặc định), kinetic, chalk, geo3d. Mỗi template `{key,name,desc,gl,sfx,music?,bg,scene,chrome}`. SFX nhúng base64 (`SFX_DATA`, `SFX_VERSION`), build bằng `sfx/build_*.py` (Kenney Interface Sounds CC0 + âm tự tổng hợp).
+`TEMPLATES`: chỉ còn minimal. Template `{key,name,desc,gl,sfx,music?,bg,scene,chrome}`. SFX nhúng base64 (`SFX_DATA`, `SFX_VERSION`), build bằng `sfx/build_*.py` (Kenney Interface Sounds CC0 + âm tự tổng hợp).
 
 ## Chạy thử cục bộ (headless)
 `test/` dùng playwright-core. Các script đang trỏ cứng `ROOT='/home/claude/studio'` và đường dẫn chrome: sửa lại cho máy của bạn. Trang cần secure context (WebCodecs): test phục vụ HTML ở https://studio.local qua route của Playwright. `SCRIPT='<json>' node test/shots.mjs` xuất ảnh từng cảnh của 4 template vào `test/out/`.

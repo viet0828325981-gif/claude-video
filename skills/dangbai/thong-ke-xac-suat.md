@@ -13,7 +13,7 @@ Hai kiểu bài, hai sợi chỉ khác nhau:
 | thống kê: bảng số liệu, biểu đồ, số trung bình, mốt | **bảng mọc dần, rồi biểu đồ cột cạnh nó** |
 | xác suất, đếm số trường hợp | **cây trường hợp mọc nhánh** |
 
-Cả hai đều mọc theo lời trong cùng một `view` và một `box` cố định.
+Cả hai đều mọc theo lời trong cùng một `view` cố định.
 
 ### Bảng mọc dần thì đừng dùng `table`
 
@@ -64,6 +64,15 @@ Bài có hai biến thì bảng hai chiều dễ đọc hơn cây. Bài giao nha
 1. Cột biểu đồ mọc chúc xuống vì quên trục `y` hướng xuống.
 2. Vẽ cả cây trường hợp trong một cảnh, người xem không biết đếm từ đâu.
 3. Biểu đồ không ghi số trên cột, phải ước lượng bằng mắt.
+
+## Tiêu chí nhìn
+
+Những câu chỉ trả lời được khi mở ảnh khung hình ra nhìn.
+
+- Cột biểu đồ có mọc lên từ đường đáy không, hay chúc xuống
+- Giá trị có ghi trên đầu cột không
+- Cây trường hợp có nhìn ra nhánh nào nối nhánh nào không
+- Nhánh thuận lợi có khác màu nhánh bị loại không
 
 ## Tiêu chí kiểm
 
