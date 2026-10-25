@@ -353,7 +353,7 @@ function drawVis(ctx,f,vis,box,t0,st){
       if(e.fill!=='none'&&fp>0){ctx.save();ctx.globalAlpha*=fp;ctx.beginPath();pts.forEach((q,i)=>i?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1]));ctx.closePath();ctx.fillStyle=st.fill[e.fill]||st.fill.soft;ctx.fill();ctx.restore();}
       st.stroke(ctx,partialPts(pts,E.inOut(p),true),C,lw,p>=1);}
     else if(e.t==='dot'){const q=P(e.at);ctx.save();ctx.globalAlpha*=p;ctx.fillStyle=C;ctx.beginPath();ctx.arc(q[0],q[1],lw*1.8*E.back(p),0,Math.PI*2);ctx.fill();ctx.restore();}
-    else if(e.t==='text'){const q=P(e.at);const px=Math.round(sc*[0,4.8,6.2,8.8][e.size]);st.text(ctx,e.s,q[0],q[1],C,p,e.align,Math.max(18,Math.min(96,px)),e.size===3?700:500);}
+    else if(e.t==='text'){const q=P(e.at);const px=Math.round(sc*[0,6.8,8.2,11][e.size]);st.text(ctx,e.s,q[0],q[1],C,p,e.align,Math.max(22,Math.min(96,px)),e.size===3?700:500);}
     else if(e.t==='table'){
       const [x0,y0]=P(e.at);const tw=e.wh[0]*sc,th=e.wh[1]*sc;const R=e.rows.length,Cn=Math.max(...e.rows.map(r=>r.length));const rh=th/R,cw=tw/Cn;
       const gp=E.inOut(p);
@@ -413,8 +413,12 @@ const EXAMPLE_SCRIPT=normScript({title:'Mệnh đề là gì?',scenes:[
 
 /* ---------------- drawing helpers ---------------- */
 function font(ctx,w,size,fam){ctx.font=`${w} ${size}px ${fam}`;}
+// Dấu quan hệ và phép toán dính vào vế ĐỨNG SAU nó bằng khoảng trắng không ngắt, nên khi
+// phải xuống dòng thì xuống TRƯỚC dấu = như cách viết toán, không treo dấu = ở cuối dòng.
+// Tách chỉ theo khoảng trắng thường, vì \s của JS khớp cả khoảng trắng không ngắt.
+const DAU_TOAN=/ ([=≠<>≤≥⇒⇔→·×÷∽+−]) /g;
 function wrap(ctx,text,maxW){
-  const words=String(text||'').split(/\s+/).filter(Boolean);const lines=[];let line='';
+  const words=String(text||'').replace(DAU_TOAN,' $1\u00a0').split(/[ \t\r\n]+/).filter(Boolean);const lines=[];let line='';
   for(const w of words){const t=line?line+' '+w:w;if(ctx.measureText(t).width>maxW&&line){lines.push(line);line=w;}else line=t;}
   if(line)lines.push(line);return lines;
 }
@@ -563,7 +567,7 @@ function mnToolbar(ctx,x,y,a,sel){ // tiny drawing-tool palette
 }
 function mnCursor(ctx,x,y,a){if(a<=0)return;ctx.save();ctx.globalAlpha*=a;ctx.translate(x,y);ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(0,26);ctx.lineTo(7,20);ctx.lineTo(12,31);ctx.lineTo(17,29);ctx.lineTo(12,18);ctx.lineTo(21,18);ctx.closePath();
   ctx.fillStyle='#fff';ctx.fill();ctx.strokeStyle='#000';ctx.lineWidth=1.5;ctx.stroke();ctx.restore();}
-const MN_VS={lw:2.5,col:{ink:'#f2f2f2',muted:'rgba(242,242,242,.45)',a1:'#8fb0ec',a2:'#8fd09a',a3:'#ec9a9a'},
+const MN_VS={lw:3.4,col:{ink:'#f2f2f2',muted:'rgba(242,242,242,.45)',a1:'#8fb0ec',a2:'#8fd09a',a3:'#ec9a9a'},
   fill:{soft:'rgba(255,255,255,.11)',a1:'rgba(64,96,150,.85)',a2:'rgba(66,112,74,.85)',a3:'rgba(140,70,70,.8)'},stroke:lineStroker(0),text:fadeText(BV)};
 const minimalTpl={
   key:'minimal',name:'Tối giản',desc:'Nét trắng mảnh trên nền đen, vẽ dần. Âm: ambient, click, tiếng vẽ, chuông',gl:false,
@@ -599,7 +603,7 @@ const minimalTpl={
     // lặp lại và ăn mất chỗ. Các loại cảnh khác vẫn giữ tiêu đề.
     let top=130;
     if(s.type!=='point'){
-      const h=fit(ctx,s.heading,MW,2,600,BV,40,30);font(ctx,600,h.size,BV);textLines(ctx,h.lines,W/2,170,h.size*1.2,MN.ink,prog(lt,.1,.5));
+      const h=fit(ctx,s.heading,MW,2,600,BV,44,32);font(ctx,600,h.size,BV);textLines(ctx,h.lines,W/2,170,h.size*1.2,MN.ink,prog(lt,.1,.5));
       top=170+h.lines.length*h.size*1.2+40;
     }
     if(s.type==='point'){
@@ -608,7 +612,7 @@ const minimalTpl={
       const vh=s.visual?Math.round(con*.6):0;
       const daiChu=s.visual?con-vh-KHE:con;
       // Cỡ chữ khởi điểm lớn hơn vì dải chữ giờ rộng gấp đôi; fit tự co nếu không vừa.
-      const co=s.visual?50:40;
+      const co=s.visual?54:44;
       const dongToiDa=s.visual?Math.max(2,Math.min(6,Math.floor(daiChu/(co*1.45)))):8;
       const b=fit(ctx,s.body,MW,dongToiDa,400,BV,co,32);font(ctx,400,b.size,BV);const lh=b.size*1.45;
       let by;
@@ -636,7 +640,7 @@ const minimalTpl={
     let y=top;
     if(s.body){const b=fit(ctx,s.body,MW,2,400,BV,34,28);font(ctx,400,b.size,BV);textLines(ctx,b.lines,W/2,y+b.size,b.size*1.35,MN.soft,prog(lt,.4,.9));y+=b.lines.length*b.size*1.35+40;}
     const D=daiHinh(s.visual,y,H-150);
-    const n=s.items.length||1;const slot=Math.max(.5,(f.dur-1.6)/n);const L=90,R=W-90;const LS=listSize(ctx,s.items,it=>R-L-(it.mark!=='none'?190:60),D.day-y,400,BV,38,1.35,34*(n>4?Math.max(.35,4/n):1));const PF=n>4?Math.max(.35,4/n):1;
+    const n=s.items.length||1;const slot=Math.max(.5,(f.dur-1.6)/n);const L=90,R=W-90;const LS=listSize(ctx,s.items,it=>R-L-(it.mark!=='none'?190:60),D.day-y,400,BV,42,1.35,34*(n>4?Math.max(.35,4/n):1));const PF=n>4?Math.max(.35,4/n):1;
     s.items.forEach((it,k)=>{
       const t1=.8+k*slot;
       const t=fit(ctx,it.text,R-L-(it.mark!=='none'?190:60),9,400,BV,LS,LS);const lh=t.size*1.35;const rowH=Math.max(70*PF,t.lines.length*lh+34*PF);
@@ -653,8 +657,8 @@ const minimalTpl={
     veDai(ctx,f,s.visual,D.day,D.cao,.6,VS);
   },
   chrome(ctx,rt,f){
-    font(ctx,500,20,MONO);ctx.textAlign='right';ctx.fillStyle=MN.dim;ctx.fillText(String(f.i+1).padStart(2,'0')+' / '+String(f.count).padStart(2,'0'),W-60,80);
-    ctx.textAlign='left';font(ctx,500,20,BV);ctx.fillText(cut(f.title,30),60,80);
+    font(ctx,500,22,MONO);ctx.textAlign='right';ctx.fillStyle=MN.dim;ctx.fillText(String(f.i+1).padStart(2,'0')+' / '+String(f.count).padStart(2,'0'),W-60,80);
+    ctx.textAlign='left';font(ctx,500,22,BV);ctx.fillText(cut(f.title,30),60,80);
     ctx.fillStyle='rgba(255,255,255,.12)';ctx.fillRect(60,H-70,W-120,2);ctx.fillStyle='rgba(255,255,255,.7)';ctx.fillRect(60,H-70,(W-120)*clamp01(f.t/f.total),2);
   }
 };
