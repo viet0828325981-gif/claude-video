@@ -600,10 +600,19 @@ const minimalTpl={
       top=170+h.lines.length*h.size*1.2+40;
     }
     if(s.type==='point'){
-      // Chỗ tiêu đề nhường lại cho chữ: cỡ chữ lớn hơn chứ không phải hình to thêm.
-      const b=fit(ctx,s.body,MW,s.visual?5:8,400,BV,s.visual?46:40,32);font(ctx,400,b.size,BV);const lh=b.size*1.45;
+      // Chia dọc cố định: hình 6 phần, chữ 4 phần. Hai dải rời nhau nên không đè được.
+      const con=H-150-top, KHE=40;
+      const vh=s.visual?Math.round(con*.6):0;
+      const daiChu=s.visual?con-vh-KHE:con;
+      // Cỡ chữ khởi điểm lớn hơn vì dải chữ giờ rộng gấp đôi; fit tự co nếu không vừa.
+      const co=s.visual?50:40;
+      const dongToiDa=s.visual?Math.max(2,Math.min(6,Math.floor(daiChu/(co*1.45)))):8;
+      const b=fit(ctx,s.body,MW,dongToiDa,400,BV,co,32);font(ctx,400,b.size,BV);const lh=b.size*1.45;
       let by;
-      if(s.visual){const vh=Math.max(470,H-150-top-b.lines.length*lh-70);drawVis(ctx,f,s.visual,{x:VIS_LE,y:top,w:W-VIS_LE*2,h:vh},.35,VS);by=top+vh+50;}
+      if(s.visual){drawVis(ctx,f,s.visual,{x:VIS_LE,y:top,w:W-VIS_LE*2,h:vh},.35,VS);
+        // Chữ căn giữa dải của nó, khỏi dính sát mép trên khi chỉ có một dòng.
+        const khoiChu=(b.lines.length-1)*lh+b.size;
+        by=top+vh+KHE+Math.max(0,Math.round((daiChu-khoiChu)/2))+b.size;}
       else by=Math.max(top+60,Math.round((H-b.lines.length*lh)/2));
       // Màu cũ tô theo số thứ tự DÒNG, nên một câu bị ngắt dòng là nửa sau hoá xám.
       // Ngắt dòng do bề rộng khung quyết, không mang nghĩa gì, nên để một màu.
