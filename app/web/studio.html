@@ -77,6 +77,9 @@ select,.field{font:14px var(--font-ui);color:var(--fg);background:var(--surface-
 .pill[data-s="rendering"],.pill[data-s="scripting"]{color:var(--accent);border-color:var(--accent)}
 .pill[data-s="error"],.pill[data-s="interrupted"]{color:var(--warn);border-color:var(--warn)}
 .pill[data-s="hq"],.pill[data-s="voice"]{color:var(--info);border-color:var(--info)}
+/* CSS có display riêng (như .check{display:flex}) sẽ đè thuộc tính hidden, ẩn mà vẫn hiện. */
+[hidden]{display:none!important}
+.console.mot-cot{grid-template-columns:1fr}
 .actions{display:flex;gap:6px;flex-wrap:wrap}
 .actions{align-items:center}
 .cmenu{position:relative;margin-left:auto}
@@ -1312,9 +1315,9 @@ function buildPicker(){
   // Một template thì không có gì để chọn: ẩn cả cột, trả chỗ cho ô nhập yêu cầu.
   const cot=$('tplcol');
   const xv=$('rotate-wrap'); if(xv&&TPL_ORDER.length<2)xv.hidden=true;
-  if(TPL_ORDER.length<2){if(cot)cot.hidden=true;const sl=$('sfx-listen');
+  if(TPL_ORDER.length<2){if(cot){cot.hidden=true;cot.parentNode.classList.add('mot-cot');}const sl=$('sfx-listen');
     if(sl&&!sl.dataset.moved){const d=document.querySelector('#prompt-input')&&document.querySelector('#prompt-input').closest('div');
-      const r=sl.closest('.row');if(d&&r){d.parentNode.appendChild(r);sl.dataset.moved='1';r.hidden=false;}}
+      const r=sl.closest('.row');if(d&&r){d.appendChild(r);sl.dataset.moved='1';r.hidden=false;}}
     return;}
   box.innerHTML=TPL_ORDER.map(k=>`<button class="tpl" type="button" data-tpl="${k}" aria-pressed="${k===S.tpl}"><canvas width="${W}" height="${H}" aria-hidden="true"></canvas><b>${esc(TEMPLATES[k].name)}</b><span>${esc(TEMPLATES[k].desc)}</span></button>`).join('');
   box.addEventListener('click',ev=>{const b=ev.target.closest('.tpl');if(!b)return;S.tpl=b.dataset.tpl;box.querySelectorAll('.tpl').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));try{localStorage.setItem('xvbg-tpl',S.tpl);}catch(e){}});
