@@ -8,6 +8,9 @@ node_modules/
 # Dữ liệu riêng: job, kịch bản, video, giọng đọc, phiên agent
 data/
 
+# Video xuất ra để xem thử, không thuộc về mã nguồn
+*.mp4
+
 # Lặt vặt
 Thumbs.db
 .DS_Store

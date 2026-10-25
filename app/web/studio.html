@@ -78,6 +78,15 @@ select,.field{font:14px var(--font-ui);color:var(--fg);background:var(--surface-
 .pill[data-s="error"],.pill[data-s="interrupted"]{color:var(--warn);border-color:var(--warn)}
 .pill[data-s="hq"],.pill[data-s="voice"]{color:var(--info);border-color:var(--info)}
 .actions{display:flex;gap:6px;flex-wrap:wrap}
+.actions{align-items:center}
+.cmenu{position:relative;margin-left:auto}
+.cmenu>summary{list-style:none;display:inline-block;line-height:1;padding:7px 11px;font-size:15px}
+.cmenu>summary::-webkit-details-marker{display:none}
+.cmenu[open]>summary{border-color:var(--fg)}
+/* Thẻ có overflow:hidden nên menu phải bung LÊN TRÊN, bung xuống là bị cắt mất. */
+.cmenu-pop{position:absolute;right:0;bottom:calc(100% + 6px);z-index:30;min-width:210px;padding:8px;border:1px solid var(--border);border-radius:10px;background:var(--surface);box-shadow:0 10px 30px rgba(0,0,0,.22);display:flex;flex-direction:column;gap:6px}
+.cmenu-pop .hint{margin:2px 0 0}
+.cmenu-pop .btn,.cmenu-pop select{width:100%;text-align:left}
 .err{font-size:12.5px;color:var(--warn);margin:0}
 .editor{border-top:1px solid var(--border);padding:12px 14px;display:flex;flex-direction:column;gap:12px;background:var(--surface-2)}
 .sc{border:1px solid var(--border);border-radius:10px;padding:10px;background:var(--surface);display:flex;flex-direction:column;gap:7px}
@@ -164,7 +173,7 @@ select,.field{font:14px var(--font-ui);color:var(--fg);background:var(--surface-
           <option value="45">45 giây</option>
           <option value="60">60 giây</option>
         </select>
-        <label class="check" for="rotate-tpl"><input type="checkbox" id="rotate-tpl"> Xoay vòng các template</label>
+        <label class="check" for="rotate-tpl" id="rotate-wrap"><input type="checkbox" id="rotate-tpl"> Xoay vòng các template</label>
         <label class="hint" for="model-select">Model Claude</label>
         <select id="model-select" title="Áp dụng cho viết kịch bản và nút Claude sửa. Tính vào hạn mức Claude của người đang mở trang.">
           <option value="quick">Nhanh · rẻ</option>
@@ -181,7 +190,7 @@ select,.field{font:14px var(--font-ui);color:var(--fg);background:var(--surface-
         <span class="hint" id="create-hint"></span>
       </div>
     </div>
-    <div>
+    <div id="tplcol">
       <span class="label">Template</span>
       <div class="tpls" id="tpls"></div>
       <div class="row"><button class="btn btn-sm" id="sfx-listen" type="button">Nghe âm thanh của template đang chọn</button><span class="hint">Âm thanh: Kenney Interface Sounds (CC0) và whoosh tự tổng hợp.</span></div>
@@ -996,21 +1005,23 @@ function renderCard(job){
     ${voiceStuck(job)?'<p class="err">Yêu cầu giọng đọc chưa có kết quả quá lâu.</p>':''}
     ${ts==='error'&&job.tts&&job.tts.note?`<p class="err">${esc(job.tts.note)}</p>`:''}
     <div class="actions">
-      <label class="hint" for="${job.id}-tpl" hidden>Template</label>
-      <select class="btn-sm" id="${job.id}-tpl" data-act="tpl" ${canAct?'':'disabled'}>${TPL_ORDER.map(k=>`<option value="${k}" ${k===job.template?'selected':''}>${esc(TEMPLATES[k].name)}</option>`).join('')}</select>
-      <select class="btn-sm" id="${job.id}-voice" data-act="voice" aria-label="Giọng đọc" ${canAct?'':'disabled'}>${voiceOpts(job.voice||'none',true)}</select>
       ${job.script&&job.voice&&job.voice!=='none'&&(ts==='none'||ts==='stale'||ts==='error')?`<button class="btn btn-sm" data-act="tts">${ts==='none'?'Yêu cầu giọng đọc':'Đọc lại giọng'}</button>`:''}
       ${ts==='requested'?'<button class="btn btn-sm" data-act="tts-cancel">Huỷ yêu cầu giọng</button>':''}
       ${((ts==='requested'&&(!job.tts.firedAt||voiceStuck(job)))||(ts==='processing'&&voiceStuck(job)))&&S.mcp?'<button class="btn btn-sm" data-act="tts-fire">Gửi Claude tạo giọng</button>':''}
-      ${canAct?`<button class="btn btn-sm" data-act="sfx">${job.sfx!==false?'Tắt hiệu ứng âm':'Bật hiệu ứng âm'}</button>`:''}
       ${job.script?`<button class="btn btn-sm" data-act="preview">${L.preview?'Dừng xem':'Xem trước'}</button>`:''}
-      ${job.script&&canAct?`<button class="btn btn-sm" data-act="render">${st==='done'?'Dựng lại':'Dựng'}</button>`:''}
+      ${job.script&&canAct?`<button class="btn btn-sm${st==='done'?'':' btn-primary'}" data-act="render">${st==='done'?'Dựng lại':'Dựng'}</button>`:''}
       ${S.running.has(job.id)&&st==='rendering'?'<button class="btn btn-sm" data-act="stop">Dừng</button>':''}
-      ${st==='done'&&src&&S.downloads?`<button class="btn btn-sm" data-act="download">Tải ${esc((job.ext||'mp4').toUpperCase())}</button>`:''}
+      ${st==='done'&&src&&S.downloads?`<button class="btn btn-sm btn-primary" data-act="download">Tải ${esc((job.ext||'mp4').toUpperCase())}</button>`:''}
       ${job.script&&canAct?`<button class="btn btn-sm" data-act="edit">Sửa cảnh</button>`:''}
-      ${canAct&&S.sample?`<button class="btn btn-sm" data-act="rescript">Viết lại kịch bản</button>`:''}
-      ${job.script&&!(job.hq&&job.hq.status==='requested')?`<button class="btn btn-sm" data-act="hq">Gửi Claude dựng bản HQ</button>`:''}
-      ${canAct?`<button class="btn btn-sm btn-danger" data-act="del">${L.confirmDel?'Bấm lần nữa để xoá':'Xoá'}</button>`:''}
+      <details class="cmenu"><summary class="btn btn-sm" title="Thêm lựa chọn" aria-label="Thêm lựa chọn">⋮</summary><div class="cmenu-pop">
+        ${TPL_ORDER.length>1?`<label class="hint" for="${job.id}-tpl">Template</label><select class="btn-sm" id="${job.id}-tpl" data-act="tpl" ${canAct?'':'disabled'}>${TPL_ORDER.map(k=>`<option value="${k}" ${k===job.template?'selected':''}>${esc(TEMPLATES[k].name)}</option>`).join('')}</select>`:''}
+        <label class="hint" for="${job.id}-voice">Giọng đọc</label>
+        <select class="btn-sm" id="${job.id}-voice" data-act="voice" ${canAct?'':'disabled'}>${voiceOpts(job.voice||'none',true)}</select>
+        ${canAct?`<button class="btn btn-sm" data-act="sfx">${job.sfx!==false?'Tắt hiệu ứng âm':'Bật hiệu ứng âm'}</button>`:''}
+        ${canAct&&S.sample?`<button class="btn btn-sm" data-act="rescript">Viết lại kịch bản</button>`:''}
+        ${job.script&&!(job.hq&&job.hq.status==='requested')?`<button class="btn btn-sm" data-act="hq">Gửi Claude dựng bản HQ</button>`:''}
+        ${canAct?`<button class="btn btn-sm btn-danger" data-act="del">${L.confirmDel?'Bấm lần nữa để xoá':'Xoá'}</button>`:''}
+      </div></details>
     </div>`;
   // HQ box
   const hq=el.querySelector('.hqbox');
@@ -1281,6 +1292,13 @@ async function listenTemplate(key){
 /* template picker with live thumbnails */
 function buildPicker(){
   const box=$('tpls');
+  // Một template thì không có gì để chọn: ẩn cả cột, trả chỗ cho ô nhập yêu cầu.
+  const cot=$('tplcol');
+  const xv=$('rotate-wrap'); if(xv&&TPL_ORDER.length<2)xv.hidden=true;
+  if(TPL_ORDER.length<2){if(cot)cot.hidden=true;const sl=$('sfx-listen');
+    if(sl&&!sl.dataset.moved){const d=document.querySelector('#prompt-input')&&document.querySelector('#prompt-input').closest('div');
+      const r=sl.closest('.row');if(d&&r){d.parentNode.appendChild(r);sl.dataset.moved='1';r.hidden=false;}}
+    return;}
   box.innerHTML=TPL_ORDER.map(k=>`<button class="tpl" type="button" data-tpl="${k}" aria-pressed="${k===S.tpl}"><canvas width="${W}" height="${H}" aria-hidden="true"></canvas><b>${esc(TEMPLATES[k].name)}</b><span>${esc(TEMPLATES[k].desc)}</span></button>`).join('');
   box.addEventListener('click',ev=>{const b=ev.target.closest('.tpl');if(!b)return;S.tpl=b.dataset.tpl;box.querySelectorAll('.tpl').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));try{localStorage.setItem('xvbg-tpl',S.tpl);}catch(e){}});
   const tl=timeline(EXAMPLE_SCRIPT),total=totalDur(EXAMPLE_SCRIPT);const moments=[2.6,13.5,17.5,25];let m=0;let glrt=null;

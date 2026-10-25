@@ -15,6 +15,13 @@ const css=`
 .xv-hd-item>p{margin:0;flex:1;white-space:pre-wrap;max-height:3.2em;overflow:hidden;line-height:1.6}
 .xv-hd-item .xv-meta{color:var(--muted);font-size:12px;white-space:nowrap}
 .xv-pair{display:inline-flex;align-items:center;gap:6px}
+.xv-chon{display:inline-block}
+.xv-chon>summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border:1px solid var(--border);border-radius:9px;background:var(--surface-2);font:600 13px var(--font-ui)}
+.xv-chon>summary::-webkit-details-marker{display:none}
+.xv-chon>summary:hover{border-color:var(--fg)}
+.xv-chon[open]>summary{border-color:var(--fg)}
+.xv-cham{color:var(--muted);font-size:15px;line-height:1}
+.xv-luoi{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--surface-2)}
 #xv-truc-hint{flex-basis:100%}
 dialog.xv{border:1px solid var(--border);border-radius:14px;padding:0;max-width:min(900px,94vw);width:900px;max-height:88vh;background:var(--surface);color:var(--fg)}
 dialog.xv::backdrop{background:rgba(10,12,22,.5)}
@@ -119,7 +126,8 @@ function render(d){
 /* Hàng chọn trục trong khu nhập yêu cầu. Để "Claude tự chọn" thì router quyết,
    chọn tay thì trục đó khỏi hỏi Claude. */
 const KHOA='xv-truc';
-const COT=[['theloai','Thể loại'],['monhoc','Môn học'],['dangbai','Dạng bài'],['trinhdo','Trình độ'],['phongcach','Phong cách']];
+// Phong cách bỏ khỏi ô chọn: chỉ còn một template nên không có gì để chọn.
+const COT=[['theloai','Thể loại'],['monhoc','Môn học'],['dangbai','Dạng bài'],['trinhdo','Trình độ']];
 let truc={};
 try{truc=JSON.parse(localStorage.getItem(KHOA)||'{}');}catch(e){}
 // Job do hàng đợi tạo giữ đúng trục lúc xếp hàng, không bị đổi khi người dùng chỉnh ô chọn sau đó.
@@ -136,8 +144,11 @@ function ganChonTruc(ds){
   const row=document.createElement('div');row.className='row';row.id='xv-truc';
   const sel=(id,nhan,opts)=>`<span class="xv-pair"><label class="hint" for="xv-${id}">${nhan}</label><select id="xv-${id}" data-truc="${id}">
     <option value="">Claude tự chọn</option>${opts}</select></span>`;
-  row.innerHTML=COT.map(([k,nhan])=>sel(k,nhan,(ds.truc[k]||[]).map(s=>`<option value="${esc(s.id)}" title="${esc(s.mo_ta)}">${esc(s.ten)}</option>`).join('')))
-    .join('')+sel('lop','Lớp',Array.from({length:12},(_,i)=>`<option value="${i+1}">Lớp ${i+1}</option>`).join(''))
+  const o=COT.map(([k,nhan])=>sel(k,nhan,(ds.truc[k]||[]).map(s=>`<option value="${esc(s.id)}" title="${esc(s.mo_ta)}">${esc(s.ten)}</option>`).join('')))
+    .join('')+sel('lop','Lớp',Array.from({length:12},(_,i)=>`<option value="${i+1}">Lớp ${i+1}</option>`).join(''));
+  // Mặc định thu lại: phần lớn thời gian người dùng để Claude tự chọn hết.
+  row.innerHTML=`<details class="xv-chon"><summary><span id="xv-truc-tom"></span><span class="xv-cham">⋮</span></summary>
+      <div class="xv-luoi">${o}</div></details>`
     +`<span class="xv-pair"><label class="hint" for="xv-che">Cách dựng</label><select id="xv-che"
         title="Nhanh: một lượt gọi Claude. Kỹ: agent tự dựng ảnh từng cảnh, tự xem rồi tự sửa — lâu và tốn hơn nhiều.">
       <option value="nhanh">Nhanh · một lượt</option><option value="ky">Kỹ · agent tự xem lại</option></select></span>`
@@ -157,14 +168,23 @@ function ganChonTruc(ds){
   cs.addEventListener('change',()=>{che=cs.value;try{localStorage.setItem('xv-che',che);}catch(e){}capNhatHint();});
   capNhatHint();
 }
+// Dòng tóm tắt thay cho bảy ô chọn: chỉ nêu những mục người dùng đã chọn tay.
 function capNhatHint(){
+  const tom=document.getElementById('xv-truc-tom');
+  if(tom){
+    const ten=[];
+    for(const [k,nhan] of COT) if(truc[k]){
+      const o=document.querySelector(`#xv-${k} option[value="${truc[k]}"]`);
+      ten.push(o?o.textContent:truc[k]);
+    }
+    if(truc.lop)ten.push('lớp '+truc.lop);
+    tom.textContent=ten.length?ten.join(' · '):'Claude tự chọn hết';
+    tom.className=ten.length?'':'xv-q';
+  }
   const h=document.getElementById('xv-truc-hint');if(!h)return;
-  const n=COT.filter(([k])=>truc[k]).length+(truc.lop?1:0);
-  const t=n===COT.length+1?'Bạn chọn hết, bỏ qua lượt định tuyến.'
-    :n?`Bạn chọn ${n} mục, Claude tự chọn phần còn lại.`
-    :'Claude đọc yêu cầu và tự chọn hết. Phong cách sẽ quyết định template.';
-  h.textContent=che==='ky'?t+' Cách dựng kỹ: agent tự xem lại ảnh từng cảnh, mất vài phút mỗi video.':t;
+  h.textContent=che==='ky'?'Cách dựng kỹ: agent tự xem lại ảnh từng cảnh, mất vài phút mỗi video.':'';
 }
+
 
 let dlg=null;
 function openDetail(id){
@@ -179,9 +199,17 @@ function openDetail(id){
 }
 
 // Gắn nút vào thẻ. renderCard ghi đè innerHTML mỗi lần vẽ lại nên phải gắn lại sau mỗi lần.
+// <details> không tự đóng khi bấm ra ngoài, nên menu ⋮ sẽ nằm lì trên thẻ.
+function dongMenuThe(ev){
+  document.querySelectorAll('details.cmenu[open]').forEach(d=>{ if(!d.contains(ev.target)) d.open=false; });
+}
+document.addEventListener('click',dongMenuThe);
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') document.querySelectorAll('details.cmenu[open]').forEach(d=>d.open=false); });
+
 function ganNut(){
   document.querySelectorAll('.card[data-id]').forEach(card=>{
-    const act=card.querySelector('.actions');
+    // Vào menu ⋮ nếu thẻ có, để khỏi lại bày thêm một nút ra ngoài.
+    const act=card.querySelector('.cmenu-pop')||card.querySelector('.actions');
     if(!act||act.querySelector('[data-xv="detail"]'))return;
     const b=document.createElement('button');
     b.className='btn btn-sm xv-btn';b.type='button';b.dataset.xv='detail';b.textContent='Chi tiết';
