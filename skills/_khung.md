@@ -57,6 +57,12 @@ Chỗ người học hụt nặng nhất không phải "bước này làm gì" m
 
 Loại cảnh `point` cho hình ô lớn nhất, nên **các bước giải bài đều dùng `point`** — dựng hình, nêu giả thiết, từng bước suy luận. Dành `list` và `summary` cho chỗ thật sự là một danh sách, thường là cảnh tổng kết cuối video; dành `formula` cho cảnh nêu một công thức chốt.
 
+**Vẽ xong hình của đề rồi mới bắt đầu giảng.** Khi đề mô tả một hình, hãy dành những cảnh đầu để **vừa đọc giả thiết vừa dựng hình**, mỗi cảnh một ý của đề, cho tới khi hình có đủ mọi thứ đề cho. Chưa dựng xong thì chưa được lập luận.
+
+Người xem không thể theo một suy luận về cái họ chưa nhìn thấy. Nghe "hai đường cao BE và CF cắt nhau tại H" mà trên màn hình chưa có BE, chưa có CF, thì câu đó trôi qua vô nghĩa. Và nếu vừa dựng hình vừa suy luận xen kẽ thì người xem phải làm hai việc cùng lúc, hỏng cả hai.
+
+Bài có nhiều ý thì dựng theo từng ý: dựng đủ hình cho ý a, giải xong ý a, rồi mới vẽ thêm phần mà ý b cần. Đừng dựng hết hình của cả bài ngay từ đầu — người xem sẽ thấy một mớ nét chưa dùng tới.
+
 **Chia cảnh theo logic dạy, không theo sức chứa của ô chữ.** Một cảnh là một ý, một bước. Ô chữ là một vùng chứ không phải một dòng — một dòng hay ba dòng đều được, miễn đừng dài tới mức chữ phải co lại không đọc nổi. Đừng gộp hai bước vào một cảnh chỉ vì ô còn chỗ, cũng đừng cắt một ý làm đôi chỉ vì ô đã đầy.
 
 **Mở cảnh và âm chuyển cảnh do bạn quyết, không phải template.** Template chỉ cấp một bảng âm có sẵn (xem phần phong cách); dùng vai nào, lúc nào, hay không dùng là việc của bạn. Mỗi cảnh nhận thêm trường tuỳ chọn `"chuyen"`:
@@ -77,6 +83,7 @@ Những câu chỉ trả lời được khi mở ảnh khung hình ra nhìn.
 - Nhãn trong hình có đè lên nhau hoặc đè lên nét không
 - Khung này có gì mới so với khung trước không, hay gần như y hệt
 - Màu nhấn có nổi lên trên nền không
+- Tới cảnh bắt đầu lập luận, hình đã có đủ mọi thứ đề cho chưa
 
 ## Tiêu chí kiểm
 
@@ -87,3 +94,5 @@ Những câu chỉ trả lời được khi mở ảnh khung hình ra nhìn.
 - [ghi] Cùng một đại lượng đổi màu giữa các cảnh
 - [ghi] Lời đọc kể lại cái hình đang hiển thị thay vì nói vì sao làm bước đó
 - [ghi] Có bước giải xuất hiện mà không nói vì sao lại nghĩ tới bước đó
+- [ghi] Bắt đầu lập luận khi hình của giả thiết chưa dựng xong
+- [ghi] Dựng hình xen kẽ với lập luận thay vì dựng xong rồi mới giảng

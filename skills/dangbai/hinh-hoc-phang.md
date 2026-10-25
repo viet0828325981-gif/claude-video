@@ -10,6 +10,23 @@ Sợi chỉ xuyên suốt của dạng này là **một hình duy nhất lớn d
 
 Dùng cơ chế hình liên tục ở hợp đồng chung, và đặt `"chuyen": "noi"` cho các cảnh tiếp nối — cả chuỗi sẽ chạy như **một cú máy liên tục**, chỉ có nét mới xuất hiện theo lời.
 
+### Dựng hình trước, giảng sau
+
+Những cảnh đầu là **phần dựng hình**: đọc giả thiết tới đâu, vẽ tới đó, mỗi cảnh thêm đúng một ý của đề. Chỉ khi hình đã có đủ mọi thứ đề cho mới được sang bước lập luận đầu tiên.
+
+Với đề *"Cho tam giác ABC nhọn nội tiếp đường tròn (O). Hai đường cao BE và CF cắt nhau tại H. Đường thẳng AH cắt (O) tại điểm thứ hai K"*, phần dựng hình là một chuỗi cảnh nối tiếp:
+
+1. đường tròn (O)
+2. tam giác ABC nhọn nội tiếp
+3. đường cao BE, chân E trên AC
+4. đường cao CF, chân F trên AB
+5. giao điểm H của BE và CF
+6. đường thẳng AH kéo dài, cắt đường tròn lần thứ hai tại K
+
+Sáu cảnh ngắn, mỗi cảnh một câu lời đọc, `"chuyen": "noi"`, chưa suy luận gì cả. Xong chuỗi đó thì người xem đã nhìn thấy trọn vẹn cái sắp được chứng minh, và mới có chỗ để bám khi nghe lập luận.
+
+Bài nhiều ý thì dựng theo từng ý: đủ hình cho ý a, giải ý a, rồi vẽ thêm cho ý b.
+
 ### Nói về cái gì thì tô cái đó
 
 Đây là chỗ hình học hay hỏng nhất. Khi lời đọc nói "xét hai tam giác OBA và OCA", mà trên màn hình cả hai tam giác vẫn là nét trắng mảnh lẫn giữa đường tròn và các đoạn khác, thì người xem **không tách ra được hai tam giác ấy**. Hình có đủ nét nhưng không nói được gì.
@@ -52,10 +69,13 @@ Những câu chỉ trả lời được khi mở ảnh khung hình ra nhìn.
 - Hai hình đang so sánh có đang khác màu nhau không
 - Hình có khớp giả thiết không: điểm có nằm đúng trên đường, góc vuông có đúng đỉnh, tiếp tuyến có chạm đúng một điểm
 - Nhãn đỉnh có nằm ngoài hình và đọc được không
+- Tới cảnh lập luận đầu tiên, hình đã có đủ mọi điểm và đoạn mà đề nhắc tới chưa
 
 ## Tiêu chí kiểm
 
 - [chan] Hình vẽ mâu thuẫn với giả thiết của đề
+- [ghi] Lập luận bắt đầu khi hình chưa dựng xong theo giả thiết
+- [ghi] Một ý của giả thiết không bao giờ được vẽ ra hình
 - [ghi] Cảnh so sánh hai hình mà không tô hai hình đó bằng hai màu khác nhau
 - [ghi] Lời đọc nhắc tới một đoạn, một góc hay một tam giác mà hình không làm nổi nó lên
 - [ghi] Có bước suy luận không nói rõ dùng giả thiết nào

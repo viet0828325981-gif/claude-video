@@ -18,6 +18,12 @@ Tự chọn một phép chiếu rồi **giữ nguyên nó suốt video**:
 2. Tính toạ độ phẳng của từng đỉnh một lần, ghi nhớ, rồi mọi cảnh dùng đúng các toạ độ đó. Đỉnh xê dịch giữa hai cảnh là mất khớp và cả hình vẽ lại.
 3. Nhớ `y` của `view` hướng xuống: điểm cao hơn trong không gian có `y` nhỏ hơn trong hình.
 
+### Dựng khối trước, giảng sau
+
+Những cảnh đầu dành cho việc dựng: đáy, đỉnh, các cạnh bên, nhãn, rồi số liệu đề cho — mỗi cảnh một ý của giả thiết, chưa suy luận gì. Hình không gian còn cần việc này hơn hình phẳng, vì người xem phải mất vài giây mới đọc ra được khối trong hình chiếu phẳng.
+
+Bài nhiều ý thì dựng theo từng ý: đủ hình cho ý a, giải ý a, rồi thêm thiết diện hay đường dựng mà ý b cần.
+
 ### Nét thấy và nét khuất
 
 **Cạnh bị khối che phải vẽ `dash: true`.** Đây là quy ước bắt buộc của môn, không phải sở thích: hình chóp mà vẽ hết bằng nét liền thì người xem không đọc ra được khối nào nằm trước khối nào.
@@ -66,6 +72,7 @@ Những câu chỉ trả lời được khi mở ảnh khung hình ra nhìn.
 
 - [chan] Hình chiếu mâu thuẫn với giả thiết của đề
 - [chan] Phép chiếu đổi giữa các cảnh nên cùng một khối trông thành hai khối khác nhau
+- [ghi] Lập luận bắt đầu khi khối chưa dựng xong theo giả thiết
 - [ghi] Cạnh khuất không vẽ bằng nét đứt
 - [ghi] Nhãn đỉnh đặt đúng lên điểm hoặc lên cạnh nên không đọc được
 - [ghi] Mặt phẳng đang xét không tô màu nên lẫn vào các cạnh của khối
