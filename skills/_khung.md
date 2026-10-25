@@ -25,6 +25,8 @@ mo_ta: Những ràng buộc thật sự từ bên ngoài. Luôn được nạp.
 
 **Cảnh `point` không hiện `heading`.** Loại cảnh này dành cho các bước giải bài, và bộ dựng bỏ dòng tiêu đề đi để lấy chỗ cho hình và cho chữ — lời đọc đã nói đang làm bước gì rồi. Vẫn cứ đặt `heading` ngắn gọn để nhận ra cảnh trong trình sửa, nhưng **đừng để thông tin quan trọng ở đó**, người xem sẽ không thấy. Các loại cảnh khác vẫn hiện tiêu đề bình thường.
 
+**Chữ trên màn hình không xuống dòng được.** Bộ dựng tự ngắt dòng theo bề rộng khung và coi mọi khoảng trắng như nhau, nên ký tự xuống dòng trong `body` hay `items` chỉ thành một dấu cách — hai ý sẽ dính liền nhau. Muốn tách ý thì dùng dấu chấm hoặc dấu chấm phẩy.
+
 **Lời đọc sẽ đưa qua máy đọc tiếng Việt.** Máy đọc không đọc được chữ số và ký hiệu toán, nên narration phải viết hết bằng chữ: "x cộng hai bằng năm", "a bình phương", "ba phẩy mười bốn". Tên biến một chữ cái thì giữ nguyên (x, a, b), đó là cách giáo viên đọc thật — đừng phiên âm thành "ích", "bê", cũng đừng gọi vòng vo là "số đầu", "số giữa".
 
 **Tên điểm và đoạn thẳng cứ viết hoa bình thường** trong narration: "tiếp tuyến MA", "tứ giác MAOB", "đường cao AH". Tầng đọc tự đổi cụm chữ in hoa thành tên chữ cái lúc phát ra tiếng ("mờ a", "mờ a o bê", "a hát"), nên bạn đừng tự phiên âm — viết "mờ a" vào narration sẽ làm chữ xấu đi mà không giúp gì thêm.
