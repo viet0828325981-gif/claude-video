@@ -55,6 +55,10 @@ Nhưng "một ý vào hình" không có nghĩa là "một câu lời đọc". L�
 
 Chỗ người học hụt nặng nhất không phải "bước này làm gì" mà "sao lại nghĩ ra bước này". Một bước giải xuất hiện như từ trên trời rơi xuống thì dù đúng cũng không dạy được gì.
 
+**Lời đọc chặt chẽ kiểu toán học: căn cứ trước, kết luận sau.** Nêu đối tượng cùng tính chất của nó rồi mới rút ra điều suy được. Nói "ta có tam giác EFX vuông tại F và tam giác EXB vuông tại X, nên góc EFX bằng góc EXB bằng chín mươi độ", chứ không nói "góc EFX bằng góc EXB bằng chín mươi độ vì vuông".
+
+Gọi tên đầy đủ: tam giác nào, vuông tại đâu, góc nào ở đỉnh nào. Mỗi chữ "nên", "suy ra", "do đó" phải có căn cứ đứng ngay trước nó trong cùng câu hoặc câu liền trước. Thứ tự nói phải là thứ tự suy luận — người nghe không quay lại được để ghép căn cứ với kết luận như người đọc trên giấy.
+
 **Mỗi cảnh có sẵn một ô cho hình và một ô cho chữ, tách rời nhau.** Bộ dựng tự đo chữ rồi chia; bạn không khai toạ độ, không tính chỗ đặt, và hình không bao giờ đè lên chữ. Việc của bạn là chọn `view` đúng tỉ lệ hình thật.
 
 Loại cảnh `point` cho hình ô lớn nhất, nên **các bước giải bài đều dùng `point`** — dựng hình, nêu giả thiết, từng bước suy luận. Dành `list` và `summary` cho chỗ thật sự là một danh sách, thường là cảnh tổng kết cuối video; dành `formula` cho cảnh nêu một công thức chốt.
@@ -98,3 +102,5 @@ Những câu chỉ trả lời được khi mở ảnh khung hình ra nhìn.
 - [ghi] Có bước giải xuất hiện mà không nói vì sao lại nghĩ tới bước đó
 - [ghi] Bắt đầu lập luận khi hình của giả thiết chưa dựng xong
 - [ghi] Dựng hình xen kẽ với lập luận thay vì dựng xong rồi mới giảng
+- [ghi] Lời đọc nêu kết luận trước rồi mới nói căn cứ
+- [ghi] Có chữ "nên" hay "suy ra" mà căn cứ không được nói ra trước đó

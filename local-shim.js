@@ -44,7 +44,8 @@ const sample={
       const j=jobDangViet(prompt);
       if(j){body.kind='script';body.jobId=j.id;body.request=j.prompt;body.duration=j.duration;
         body.truc=(window.__xvTruc&&window.__xvTruc(j.id))||{};
-        body.che=(window.__xvChe&&window.__xvChe())||'nhanh';}
+        body.che=(window.__xvChe&&window.__xvChe())||'nhanh';
+        body.loiGiaiGoc=(window.__xvLoiGiai&&window.__xvLoiGiai(j))||'';}
     }
     else if(LA_SUA_CANH.test(prompt)||LA_VE_HINH.test(prompt)){
       const c=boiCanhCanh(prompt);

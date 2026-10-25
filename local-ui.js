@@ -21,6 +21,8 @@ const css=`
 .xv-chon>summary:hover{border-color:var(--fg)}
 .xv-chon[open]>summary{border-color:var(--fg)}
 .xv-cham{color:var(--muted);font-size:15px;line-height:1}
+.xv-lg{display:block;margin-top:8px}
+.xv-lg textarea{width:100%;margin-top:8px;box-sizing:border-box;font:14px/1.5 var(--font-ui)}
 .xv-luoi{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--surface-2)}
 #xv-truc-hint{flex-basis:100%}
 dialog.xv{border:1px solid var(--border);border-radius:14px;padding:0;max-width:min(900px,94vw);width:900px;max-height:88vh;background:var(--surface);color:var(--fg)}
@@ -239,14 +241,20 @@ const luuHD=()=>{try{localStorage.setItem(KHOA_HD,JSON.stringify(hangDoi));}catc
 function docYeuCau(){return (document.getElementById('prompt-input').value||'').trim();}
 function thoiLuong(){return Number(document.getElementById('dur-select').value)||30;}
 
-function taoMot(text,duration,trucItem){
+// Lời giải gốc theo đề. Đăng ký trước khi tạo job vì createJobs chạy runScript ngay lập tức;
+// sau đó gắn thẳng vào job để "Viết lại kịch bản" về sau vẫn còn lời giải.
+const loiGiaiTheoDe=new Map();
+window.__xvLoiGiai=job=>(job&&(job.loiGiaiGoc||loiGiaiTheoDe.get(job.prompt)))||'';
+function taoMot(text,duration,trucItem,loiGiai){
   const S=window.__studio.S;
+  if(loiGiai)loiGiaiTheoDe.set(text,loiGiai);
   const truoc=new Set(S.jobs.keys());
   const d=document.getElementById('dur-select'),cu=d.value;
   d.value=String(duration);
   try{window.__studio.createJobs([text],false);}finally{d.value=cu;}
   const moi=[...S.jobs.keys()].find(k=>!truoc.has(k));
   if(moi&&trucItem)trucTheoJob.set(moi,trucItem);
+  if(moi&&loiGiai){const j=S.jobs.get(moi);if(j)j.loiGiaiGoc=loiGiai;}
   return moi;
 }
 async function choXongKichBan(id){
@@ -263,7 +271,7 @@ async function chayHangDoi(){
   try{
     while(hangDoi.length){
       const it=hangDoi[0];
-      const id=taoMot(it.text,it.duration,it.truc);
+      const id=taoMot(it.text,it.duration,it.truc,it.loiGiai);
       hangDoi.shift();luuHD();veHangDoi();
       if(id)await choXongKichBan(id);
     }
@@ -282,6 +290,14 @@ function veHangDoi(){
   const b=document.getElementById('xv-hd-run');
   if(b)b.hidden=dangChay||!hangDoi.length;
 }
+function docLoiGiai(){const t=document.getElementById('xv-loigiai');return t?t.value.trim():'';}
+function xoaLoiGiai(){const t=document.getElementById('xv-loigiai');if(t){t.value='';capNhatLoiGiai();}}
+function capNhatLoiGiai(){
+  const tom=document.getElementById('xv-lg-tom');if(!tom)return;
+  const t=docLoiGiai();
+  tom.textContent=t?'Có lời giải của bạn · '+t.split(/\r?\n/).filter(Boolean).length+' dòng · Claude không giải lại':'Lời giải của bạn · không bắt buộc';
+  tom.className=t?'':'xv-q';
+}
 function ganONhap(){
   const ta=document.getElementById('prompt-input'),btn=document.getElementById('create-btn');
   if(!ta||!btn||document.getElementById('xv-hd'))return;
@@ -290,6 +306,13 @@ function ganONhap(){
   const btn2=btn.cloneNode(true);btn.parentNode.replaceChild(btn2,btn);
   btn2.textContent='Tạo video';
   ta2.placeholder='Dán cả đề bài vào đây. Xuống dòng và công thức đều được.\n\nVí dụ: Cho đường tròn (O) và điểm M nằm ngoài đường tròn. Kẻ hai tiếp tuyến MA, MB…';
+  // Ô lời giải gốc: có thì Claude không giải lại, chỉ giảng vì sao giải được như vậy.
+  const lg=document.createElement('details');lg.className='xv-chon xv-lg';lg.id='xv-lg-wrap';
+  lg.innerHTML='<summary><span id="xv-lg-tom">Lời giải của bạn · không bắt buộc</span><span class="xv-cham">⋮</span></summary>'
+    +'<textarea id="xv-loigiai" class="field" rows="7" placeholder="Dán lời giải gốc vào đây.\n\nCó lời giải thì Claude không giải lại và không đổi cách giải: chữ trên màn hình lấy đúng lời giải của bạn, còn lời đọc giảng vì sao giải được như vậy."></textarea>';
+  ta2.after(lg);
+  const lgTa=lg.querySelector('textarea');
+  lgTa.addEventListener('input',capNhatLoiGiai);
   const nhan=document.querySelector('label[for="prompt-input"]');
   if(nhan)nhan.textContent='Yêu cầu · cả ô này là MỘT video';
   const hint=document.getElementById('create-hint');
@@ -298,8 +321,8 @@ function ganONhap(){
   btn2.addEventListener('click',()=>{
     const t=docYeuCau();
     if(!t){ta2.focus();return;}
-    taoMot(t,thoiLuong(),window.__xvTruc());
-    ta2.value='';
+    taoMot(t,thoiLuong(),window.__xvTruc(),docLoiGiai());
+    ta2.value='';xoaLoiGiai();
   });
 
   const row=document.createElement('div');row.className='row';row.id='xv-hd';
@@ -312,8 +335,8 @@ function ganONhap(){
   document.getElementById('xv-hd-add').addEventListener('click',()=>{
     const t=docYeuCau();
     if(!t){ta2.focus();return;}
-    hangDoi.push({text:t,duration:thoiLuong(),truc:window.__xvTruc()});
-    luuHD();ta2.value='';veHangDoi();chayHangDoi();
+    hangDoi.push({text:t,duration:thoiLuong(),truc:window.__xvTruc(),loiGiai:docLoiGiai()});
+    luuHD();ta2.value='';xoaLoiGiai();veHangDoi();chayHangDoi();
   });
   document.getElementById('xv-hd-run').addEventListener('click',chayHangDoi);
   boc.addEventListener('click',e=>{

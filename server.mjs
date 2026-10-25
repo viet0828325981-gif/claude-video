@@ -224,6 +224,7 @@ const server = http.createServer(async (req, res) => {
         try {
           const { script, detail, template } = await chayPipeline({
             request: String(b.request), duration: Number(b.duration) || 30, modelTier: b.modelTier, jobId: b.jobId, chonTay: b.truc || {},
+            loiGiaiGoc: String(b.loiGiaiGoc || ''),
             che: b.che === 'ky' ? 'ky' : 'nhanh',
             onStep: s => { if (b.jobId) steps.set(b.jobId, s); log('[pipeline]', s); }
           });
