@@ -9,5 +9,8 @@
   "dependencies": {
     "@anthropic-ai/claude-code": "latest",
     "playwright-core": "^1.64.1"
+  },
+  "allowScripts": {
+    "@anthropic-ai/claude-code@2.1.310": true
   }
 }

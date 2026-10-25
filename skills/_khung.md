@@ -29,6 +29,20 @@ mo_ta: Những ràng buộc thật sự từ bên ngoài. Luôn được nạp.
 
 **Khung hình dọc 720×1280 nên rất hẹp.** Chữ dài sẽ tự co nhỏ lại cho vừa, co quá thì không đọc nổi. Đây là giới hạn vật lý, không phải quy định: nếu bạn xem được ảnh dựng thử thì cứ tin mắt mình hơn tin con số.
 
+**Hình sống suốt video, không vẽ lại mỗi cảnh.** Bộ dựng giữ nguyên phần hình trùng khớp giữa hai cảnh liên tiếp, nên hình có thể lớn dần theo lời thay vì nhảy. Điều kiện để khớp:
+
+1. Hai cảnh cùng `view` và cùng `box`.
+2. Những phần tử đã có phải **giống hệt nhau và đứng đầu mảng `els`**, đúng thứ tự cũ.
+3. Phần mới **thêm vào cuối mảng**.
+
+Phá một trong ba điều đó — đổi `view`, đổi `box`, xê dịch, đổi màu, đổi thứ tự, gỡ bớt một phần tử — là mất khớp, và **cả hình vẽ lại từ đầu**. Người xem phải định vị lại từ đầu, không thấy lập luận đang đi đâu.
+
+Vì vậy muốn làm nổi một phần tử đã có thì **đừng sửa nó** — thêm một phần tử mới chồng lên nó với màu nhấn. Qua cảnh sau, phần nhấn cũ giữ nguyên hoặc thêm phần nhấn mới, đừng gỡ ra.
+
+Và đừng đổi màu một đại lượng giữa chừng. Số `6` của bán kính mà cảnh này xanh cảnh kia đỏ thì người xem tưởng là hai thứ khác nhau.
+
+Hệ quả về dàn cảnh: hình bám theo lời được dựng bằng **nhiều cảnh ngắn nối liền nhau**, mỗi cảnh một câu lời đọc và thêm đúng một ý vào hình, chứ không phải vài cảnh dài. Mười lăm cảnh ngắn liền mạch tốt hơn sáu cảnh dài mà hình nhảy — miễn tổng lời đọc vẫn trong ngân sách ký tự.
+
 **Mở cảnh và âm chuyển cảnh do bạn quyết, không phải template.** Template chỉ cấp một bảng âm có sẵn (xem phần phong cách); dùng vai nào, lúc nào, hay không dùng là việc của bạn. Mỗi cảnh nhận thêm trường tuỳ chọn `"chuyen"`:
 
 - `"noi"` — cảnh này nối tiếp cảnh trước như cùng một cú máy: **không phát âm chuyển cảnh**, và chữ vào sẵn một đoạn nên ranh giới không bị loé một khoảng trống. Dùng khi cảnh sau chỉ thêm một bước vào cùng một mạch, nhất là khi giữ nguyên hình.
@@ -44,3 +58,7 @@ Không dùng emoji.
 - [chan] Lời đọc mâu thuẫn với chữ hoặc hình hiện cùng cảnh
 - [chan] Hình vẽ không khớp giả thiết nêu trong lời
 - [ghi] Có cảnh không mang thông tin mới so với cảnh trước
+- [ghi] Các cảnh có hình dùng `view` hoặc `box` khác nhau nên hình bị vẽ lại giữa chừng
+- [ghi] Phần tử đã có bị đổi thứ tự, đổi màu hoặc gỡ bớt giữa các cảnh
+- [ghi] Cùng một đại lượng đổi màu giữa các cảnh
+- [ghi] Một cảnh thêm nhiều ý vào hình cùng lúc nên lời và hình không khớp nhau
