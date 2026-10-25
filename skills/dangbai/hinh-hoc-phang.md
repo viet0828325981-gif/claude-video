@@ -36,6 +36,7 @@ Quy tắc: **đối tượng đang bàn phải nổi lên khỏi phần còn l�
 - So sánh hai hình với nhau thì tô **hai màu khác nhau** — `poly` có `fill` là `a2` và `a3` chồng lên đúng ba đỉnh của mỗi tam giác. Hai mảng màu cạnh nhau là thấy ngay chúng đối xứng.
 - Nhấn một đoạn thì thêm `line` màu nhấn trùng lên nó.
 - Nhấn một góc thì thêm `arc` màu nhấn tại đỉnh.
+- **Hai góc bằng nhau thì đánh cùng số cung, hai cạnh bằng nhau thì đánh cùng số gạch.** Một cung cho cặp thứ nhất, hai cung sát nhau cho cặp thứ hai. Nói "góc KBC bằng góc HBC" mà trên hình hai góc đó không mang cùng ký hiệu thì người xem phải tin lời chứ không thấy được.
 
 Phần nhấn là phần tử **thêm vào cuối**, không phải sửa phần tử cũ.
 

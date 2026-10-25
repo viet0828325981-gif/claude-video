@@ -588,7 +588,7 @@ const minimalTpl={
       mnCursor(ctx,cx,cy,prog(lt,.15,.35)*(1-prog(lt,2.0,2.3)));
       font(ctx,600,h.size,BV);textLines(ctx,h.lines,W/2,y0+45+h.size*.85,h.size*1.15,MN.ink,prog(lt,2.0,2.5));
       if(s.body){font(ctx,400,b.size,BV);textLines(ctx,b.lines,W/2,y0+45+hh+24+b.size*.8,b.size*1.4,MN.soft,prog(lt,2.4,2.9));}
-      if(s.visual)drawVis(ctx,f,s.visual,{x:75,y:230,w:W-150,h:y0-290},2.2,VS);
+      if(s.visual)drawVis(ctx,f,s.visual,{x:VIS_LE,y:230,w:W-VIS_LE*2,h:y0-290},2.2,VS);
       return;
     }
     const lt=f.lt;

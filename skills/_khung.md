@@ -23,6 +23,8 @@ mo_ta: Những ràng buộc thật sự từ bên ngoài. Luôn được nạp.
 
 `items` chỉ hiện với type `list` và `summary`; `mark` là "true"/"false" khi mục là ví dụ đúng/sai. `type` quyết định bố cục cảnh, hiện mỗi type một bố cục cố định.
 
+**Cảnh đầu phải là `title`, cảnh cuối phải là `summary`.** Đây là ràng buộc cứng, máy soát và bắt viết lại nếu sai. Cảnh `title` vẫn vẽ được hình, nên nếu bài cần dựng hình thì cứ bắt đầu dựng ngay ở cảnh đầu — không phải để dành một cảnh chỉ đọc tên bài.
+
 **Cảnh `point` không hiện `heading`.** Loại cảnh này dành cho các bước giải bài, và bộ dựng bỏ dòng tiêu đề đi để lấy chỗ cho hình và cho chữ — lời đọc đã nói đang làm bước gì rồi. Vẫn cứ đặt `heading` ngắn gọn để nhận ra cảnh trong trình sửa, nhưng **đừng để thông tin quan trọng ở đó**, người xem sẽ không thấy. Các loại cảnh khác vẫn hiện tiêu đề bình thường.
 
 **Chữ trên màn hình không xuống dòng được.** Bộ dựng tự ngắt dòng theo bề rộng khung và coi mọi khoảng trắng như nhau, nên ký tự xuống dòng trong `body` hay `items` chỉ thành một dấu cách — hai ý sẽ dính liền nhau. Muốn tách ý thì dùng dấu chấm hoặc dấu chấm phẩy.
@@ -57,7 +59,7 @@ Chỗ người học hụt nặng nhất không phải "bước này làm gì" m
 
 Loại cảnh `point` cho hình ô lớn nhất, nên **các bước giải bài đều dùng `point`** — dựng hình, nêu giả thiết, từng bước suy luận. Dành `list` và `summary` cho chỗ thật sự là một danh sách, thường là cảnh tổng kết cuối video; dành `formula` cho cảnh nêu một công thức chốt.
 
-**Vẽ xong hình của đề rồi mới bắt đầu giảng.** Khi đề mô tả một hình, hãy dành những cảnh đầu để **vừa đọc giả thiết vừa dựng hình**, mỗi cảnh một ý của đề, cho tới khi hình có đủ mọi thứ đề cho. Chưa dựng xong thì chưa được lập luận.
+**Vẽ xong hình của đề rồi mới bắt đầu giảng.** Khi đề mô tả một hình, hãy dành những cảnh đầu để **vừa đọc giả thiết vừa dựng hình**, mỗi cảnh một ý của đề, cho tới khi hình có đủ mọi thứ đề cho. Cảnh `title` mở đầu tính là một trong số đó: nó vừa nêu bài vừa vẽ nét đầu tiên. Chưa dựng xong thì chưa được lập luận.
 
 Người xem không thể theo một suy luận về cái họ chưa nhìn thấy. Nghe "hai đường cao BE và CF cắt nhau tại H" mà trên màn hình chưa có BE, chưa có CF, thì câu đó trôi qua vô nghĩa. Và nếu vừa dựng hình vừa suy luận xen kẽ thì người xem phải làm hai việc cùng lúc, hỏng cả hai.
 
