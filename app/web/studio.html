@@ -416,9 +416,10 @@ function font(ctx,w,size,fam){ctx.font=`${w} ${size}px ${fam}`;}
 // Dấu quan hệ và phép toán dính vào vế ĐỨNG SAU nó bằng khoảng trắng không ngắt, nên khi
 // phải xuống dòng thì xuống TRƯỚC dấu = như cách viết toán, không treo dấu = ở cuối dòng.
 // Tách chỉ theo khoảng trắng thường, vì \s của JS khớp cả khoảng trắng không ngắt.
-const DAU_TOAN=/ ([=≠<>≤≥⇒⇔→·×÷∽+−]) /g;
+// Phép toán (+ − · × ÷) thì giữ chặt cả hai vế, để "BD + DC" không bị tách đôi qua hai dòng.
+const QUAN_HE=/ ([=≠<>≤≥⇒⇔→∽⊥∥]) /g, PHEP_TOAN=/ ([·×÷+−-]) /g;
 function wrap(ctx,text,maxW){
-  const words=String(text||'').replace(DAU_TOAN,' $1\u00a0').split(/[ \t\r\n]+/).filter(Boolean);const lines=[];let line='';
+  const words=String(text||'').replace(PHEP_TOAN,'\u00a0$1\u00a0').replace(QUAN_HE,' $1\u00a0').split(/[ \t\r\n]+/).filter(Boolean);const lines=[];let line='';
   for(const w of words){const t=line?line+' '+w:w;if(ctx.measureText(t).width>maxW&&line){lines.push(line);line=w;}else line=t;}
   if(line)lines.push(line);return lines;
 }

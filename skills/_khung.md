@@ -35,6 +35,8 @@ mo_ta: Những ràng buộc thật sự từ bên ngoài. Luôn được nạp.
 
 **Khung hình dọc 720×1280 nên rất hẹp.** Chữ dài sẽ tự co nhỏ lại cho vừa, co quá thì không đọc nổi. Đây là giới hạn vật lý, không phải quy định: nếu bạn xem được ảnh dựng thử thì cứ tin mắt mình hơn tin con số.
 
+**Giới hạn độ dài mà máy soát và bắt viết lại nếu vượt:** `heading` tới 60 ký tự, `body` tới 220, mỗi cảnh tới 7 mục `items`, mỗi mục tới 90 ký tự. Cảnh tổng kết hay vượt ở mục — mỗi mục nên là một ý gọn, đừng chép nguyên câu dài của phần giải.
+
 **Hình sống suốt video, không vẽ lại mỗi cảnh.** Bộ dựng giữ nguyên phần hình trùng khớp giữa hai cảnh liên tiếp, nên hình có thể lớn dần theo lời thay vì nhảy. Điều kiện để khớp:
 
 1. Hai cảnh cùng `view`.
