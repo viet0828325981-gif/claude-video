@@ -254,7 +254,9 @@ function taoMot(text,duration,trucItem,loiGiai){
   try{window.__studio.createJobs([text],false);}finally{d.value=cu;}
   const moi=[...S.jobs.keys()].find(k=>!truoc.has(k));
   if(moi&&trucItem)trucTheoJob.set(moi,trucItem);
-  if(moi&&loiGiai){const j=S.jobs.get(moi);if(j)j.loiGiaiGoc=loiGiai;}
+  // createJobs đã lưu job lên server TRƯỚC khi có lời giải. Không lưu lại ngay thì lần sau
+  // trang nạp job từ server là mất lời giải, và "Viết lại kịch bản" sẽ âm thầm tự giải.
+  if(moi&&loiGiai){const j=S.jobs.get(moi);if(j){j.loiGiaiGoc=loiGiai;window.__studio.persist(j);}}
   return moi;
 }
 async function choXongKichBan(id){

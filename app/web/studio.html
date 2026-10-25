@@ -1372,7 +1372,7 @@ async function boot(){
     },e=>{setChip('chip-store',false,'Lưu trữ: mất kết nối');});
   }).catch(()=>setChip('chip-store',false,'Lưu trữ: lỗi'));
 }
-window.__studio={openEditor,ED,edBuildStrip,edSelect,toast,normScript,mixTrack,sfxBuf,SFX_DATA,loadAudio,pickAudioCodec,ttsUsable,encodeMP4,EXAMPLE_SCRIPT,TEMPLATES,renderFrame,timeline,totalDur,pickCodec,S,createJobs};
+window.__studio={openEditor,ED,edBuildStrip,edSelect,toast,persist,normScript,mixTrack,sfxBuf,SFX_DATA,loadAudio,pickAudioCodec,ttsUsable,encodeMP4,EXAMPLE_SCRIPT,TEMPLATES,renderFrame,timeline,totalDur,pickCodec,S,createJobs};
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
 })();
 </script>
